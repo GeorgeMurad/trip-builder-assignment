@@ -11,13 +11,13 @@ RUN apt-get update && apt-get install -y \
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# ✅ COPY ONLY BACKEND
+# ✅ COPY ONLY backend folder
 COPY trip-builder/ .
 
 RUN composer install --no-dev --optimize-autoloader
 
-# ✅ create DB + migrate
-RUN touch database/database.sqlite && php artisan migrate --force
+# ✅ ONLY create sqlite file (NO migrate here)
+RUN mkdir -p database && touch database/database.sqlite
 
 EXPOSE 10000
 
