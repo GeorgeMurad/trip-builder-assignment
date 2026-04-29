@@ -1,4 +1,4 @@
-const BASE_URL = "https://trip-builder-assignment.onrender.com/api";
+const BASE_URL = "https://trip-builder-assignment.onrender.com/api?v=2";
 
 function buildQuery(params) {
   const filtered = Object.entries(params).reduce((acc, [key, value]) => {
