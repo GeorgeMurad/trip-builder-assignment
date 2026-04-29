@@ -1,29 +1,19 @@
 # Trip Builder
 
-## Overview
+Trip Builder is a full-stack flight search application developed as a technical assignment, supporting one-way and round-trip planning with features such as airport autocomplete, airline filtering, sorting, server-side pagination, passenger-based pricing, and date validation, powered by seeded MySQL data for consistent local testing.
 
-Trip Builder is a full-stack flight search assignment that supports one-way and round-trip trip planning. The application provides airport autocomplete, airline filtering, sorting, pagination, passenger-based pricing, and seeded MySQL data for repeatable local testing.
+## Quick Start
+
+1. Start MySQL and create a local database for the project.
+2. Install and run the Laravel API from `trip-builder`.
+3. Install and run the React app from `trip-builder-frontend`.
+4. Open the Vite app at `http://localhost:5173`; the API runs at `http://127.0.0.1:8000`.
 
 ## Architecture
 
-- Backend: Laravel PHP API
-- Frontend: React SPA
+- `trip-builder`: Laravel PHP API
+- `trip-builder-frontend`: React single-page application
 - Database: MySQL
-
-In this workspace, the backend folder is `trip-builder` and the frontend folder is `trip-builder-frontend`. If the submission is renamed to `backend` and `frontend`, use the commands below as written.
-
-## Features Implemented
-
-- One-way trips
-- Round-trip trips
-- Airport autocomplete using airport code, city, city_code, and airport name
-- Preferred airline filter
-- Sorting
-- Pagination
-- Adults and children passenger counts
-- Dynamic total price based on passenger count
-- Date validation: departure date must be from today to today + 365 days
-- MySQL seed data including the provided sample data
 
 ## Requirements
 
@@ -35,13 +25,26 @@ In this workspace, the backend folder is `trip-builder` and the frontend folder 
 
 ## Backend Setup
 
+From the repository root:
+
 ```bash
-cd backend
+cd trip-builder
 composer install
 cp .env.example .env
 ```
 
-Configure the MySQL database connection in `.env`, then run:
+Configure the MySQL connection in `trip-builder/.env` before running migrations. Example local values:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=trip_builder
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Create the database using the configured database name, then run:
 
 ```bash
 php artisan key:generate
@@ -53,13 +56,42 @@ By default, the API runs at `http://127.0.0.1:8000`.
 
 ## Frontend Setup
 
+From the repository root:
+
 ```bash
-cd frontend
+cd trip-builder-frontend
 npm install
 npm run dev
 ```
 
 By default, the Vite development server runs at `http://localhost:5173`.
+
+## Project Structure
+
+- `trip-builder`: Laravel API, request validation, controllers, services, migrations, and seeders.
+- `trip-builder-frontend`: React/Vite client application, search form, autocomplete components, results UI, and API client.
+- `TEST_PLAN.md`: Manual test coverage for the main user flows and API behavior.
+
+## Features Implemented
+
+- One-way trips
+- Round-trip trips
+- Airport autocomplete using airport code, city, city code, and airport name
+- Preferred airline filter
+- Sorting
+- Server-side pagination
+- Adults and children passenger counts
+- Dynamic total price based on passenger count
+- Date validation: departure date must be from today to today + 365 days
+- MySQL seed data including the provided sample data
+
+## Design Decisions
+
+- Laravel was used for the backend because it provides a structured API layer, request validation, migrations, seeders, and clear separation between controllers and business logic.
+- React was used for the frontend because the trip search UI benefits from reusable components, local interaction state, and fast iteration with Vite.
+- MySQL was used because the assignment data is relational and works naturally with Laravel migrations, Eloquent models, and seeded test data.
+- Server-side pagination keeps API responses small and predictable as the number of available trips grows.
+- Seeded data makes the project easy to review, test, and reset without relying on external services.
 
 ## API Documentation
 
