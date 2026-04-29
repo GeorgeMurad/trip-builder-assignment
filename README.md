@@ -7,7 +7,10 @@ Trip Builder is a full-stack flight search application developed as a technical 
 Frontend:
 https://trip-builder-assignment.vercel.app
 
-The deployed frontend is available for UI review. The Laravel API runs locally using the backend setup instructions below unless a public backend URL is configured.
+Backend API:
+https://trip-builder-assignment.onrender.com/api
+
+The application is fully deployed. The frontend communicates with a live Laravel API hosted on Render.
 
 ## Quick Start
 
@@ -18,10 +21,11 @@ The deployed frontend is available for UI review. The Laravel API runs locally u
 
 ## Architecture
 
-- `trip-builder`: Laravel PHP API
-- `trip-builder-frontend`: React single-page application
-- Database: MySQL
-
+- `trip-builder`: Laravel PHP API (Dockerized, hosted on Render)
+- `trip-builder-frontend`: React single-page application (hosted on Vercel)
+- Database:
+  - SQLite (production, auto-migrated and seeded on startup)
+  - MySQL (optional for local development)
 ## Requirements
 
 - PHP
@@ -116,13 +120,6 @@ Partial extras:
 - Online deployment: the frontend is deployed at `https://trip-builder-assignment.vercel.app`, but The backend API runs locally by default. A public API can be configured by updating the frontend API base URL.
 - Multi-city trips: the database schema includes trip and ordered trip-flight tables, but there is no user-facing API or frontend flow for multi-city search.
 
-Future enhancements:
-
-- Deploy a public backend API and configure the frontend to use it.
-- Add vicinity search for nearby departure or arrival airports.
-- Add open-jaw trip search.
-- Complete multi-city trip search across API, service logic, validation, tests, and UI.
-
 ## Design Decisions
 
 - Laravel was used for the backend because it provides a structured API layer, request validation, migrations, seeders, and clear separation between controllers and business logic.
@@ -131,13 +128,22 @@ Future enhancements:
 - Server-side pagination keeps API responses small and predictable as the number of available trips grows.
 - Seeded data makes the project easy to review, test, and reset without relying on external services.
 
-## API Documentation
+## API Base URLs
 
-Base URL:
+Production:
+https://trip-builder-assignment.onrender.com/api
 
-```text
+Local development:
 http://127.0.0.1:8000/api
-```
+
+## Deployment Overview
+
+- Frontend deployed on Vercel
+- Backend deployed on Render using Docker
+- API connected via HTTPS (no localhost dependencies)
+- Database initialized automatically on container start
+
+This setup ensures the project can be reviewed without any local setup.
 
 ### GET /api/airports
 
