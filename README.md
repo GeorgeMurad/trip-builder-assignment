@@ -2,6 +2,13 @@
 
 Trip Builder is a full-stack flight search application developed as a technical assignment, supporting one-way and round-trip planning with features such as airport autocomplete, airline filtering, sorting, server-side pagination, passenger-based pricing, and date validation, powered by seeded MySQL data for consistent local testing.
 
+## Live Demo
+
+Frontend:
+https://trip-builder-assignment.vercel.app
+
+The deployed frontend is available for UI review. The Laravel API runs locally using the backend setup instructions below unless a public backend URL is configured.
+
 ## Quick Start
 
 1. Start MySQL and create a local database for the project.
@@ -54,6 +61,12 @@ php artisan serve
 
 By default, the API runs at `http://127.0.0.1:8000`.
 
+Run the automated backend feature tests with:
+
+```bash
+php artisan test
+```
+
 ## Frontend Setup
 
 From the repository root:
@@ -84,6 +97,31 @@ By default, the Vite development server runs at `http://localhost:5173`.
 - Dynamic total price based on passenger count
 - Date validation: departure date must be from today to today + 365 days
 - MySQL seed data including the provided sample data
+- Laravel feature tests for trip search, filtering, sorting, pagination, and validation
+
+## Extra Considerations
+
+Implemented extras:
+
+- Scales beyond sample data with additional seeded airlines, airports, and flights.
+- Uses MySQL-backed Laravel migrations and seeders for relational data storage.
+- Includes automated Laravel feature tests for the implemented search API behavior.
+- Documents the web service endpoints, query parameters, and sample requests below.
+- Allows searches to be restricted to a preferred airline.
+- Supports trip listing sorting by price, departure time, and duration.
+- Supports server-side trip listing pagination.
+
+Partial extras:
+
+- Online deployment: the frontend is deployed at `https://trip-builder-assignment.vercel.app`, but The backend API runs locally by default. A public API can be configured by updating the frontend API base URL.
+- Multi-city trips: the database schema includes trip and ordered trip-flight tables, but there is no user-facing API or frontend flow for multi-city search.
+
+Future enhancements:
+
+- Deploy a public backend API and configure the frontend to use it.
+- Add vicinity search for nearby departure or arrival airports.
+- Add open-jaw trip search.
+- Complete multi-city trip search across API, service logic, validation, tests, and UI.
 
 ## Design Decisions
 
@@ -164,4 +202,5 @@ GET /api/trips/round-trip?from=YUL&to=YVR&departure_date=2026-05-20&return_date=
 
 - Flight times are stored as local airport times.
 - Airport timezones are stored in the database.
-- Open-jaw, multi-city, and vicinity search are future enhancements.
+- Open-jaw and vicinity search are not implemented.
+- Multi-city search is represented only by schema primitives and is not available through the API or UI.
