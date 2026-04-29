@@ -1,4 +1,4 @@
-const BASE_URL = "http://127.0.0.1:8000/api";
+const BASE_URL = "https://trip-builder-assignment.onrender.com/api";
 
 function buildQuery(params) {
   const filtered = Object.entries(params).reduce((acc, [key, value]) => {
