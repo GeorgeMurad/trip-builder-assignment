@@ -1,4 +1,4 @@
-const BASE_URL = "https://trip-builder-assignment.onrender.com/api?v=2";
+const BASE_URL = "https://trip-builder-assignment.onrender.com/api";
 
 function buildQuery(params) {
   const filtered = Object.entries(params).reduce((acc, [key, value]) => {
@@ -60,4 +60,20 @@ export async function searchRoundTrip(params) {
   const res = await fetch(`${BASE_URL}/trips/round-trip?${query}`);
 
   return handleResponse(res, "Failed to fetch round trips");
+}
+
+export async function searchAirports(query) {
+  const params = buildQuery({ q: query });
+  const res = await fetch(`${BASE_URL}/airports?${params}`);
+
+  return handleResponse(res, "Failed to fetch airports");
+}
+
+export async function searchAirlines(query, options = {}) {
+  const params = buildQuery({ search: query });
+  const res = await fetch(`${BASE_URL}/airlines?${params}`, {
+    signal: options.signal,
+  });
+
+  return handleResponse(res, "Failed to fetch airlines");
 }

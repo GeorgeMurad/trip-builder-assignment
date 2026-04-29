@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-
-const BASE_URL = "http://127.0.0.1:8000/api";
+import { searchAirlines } from "../services/api";
 
 function getAirlineCode(airline) {
   return airline?.code ?? airline?.iata_code ?? "";
@@ -46,17 +45,7 @@ function PreferredAirlineAutocomplete({
     const debounceTimer = setTimeout(async () => {
       try {
         setIsLoading(true);
-        const res = await fetch(
-          `${BASE_URL}/airlines?search=${encodeURIComponent(query)}`,
-          { signal: controller.signal }
-        );
-
-        if (!res.ok) {
-          setResults([]);
-          return;
-        }
-
-        const data = await res.json();
+        const data = await searchAirlines(query, { signal: controller.signal });
         const list = Array.isArray(data) ? data : data.data ?? [];
         setResults(list);
         setShowDropdown(true);

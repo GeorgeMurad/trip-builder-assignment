@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-
-const BASE_URL = "http://127.0.0.1:8000/api";
+import { searchAirports } from "../services/api";
 
 function AirportAutocomplete({ id, name, value, onChange, invalid, placeholder }) {
   const [suggestions, setSuggestions] = useState([]);
@@ -30,11 +29,7 @@ function AirportAutocomplete({ id, name, value, onChange, invalid, placeholder }
 
     debounceRef.current = setTimeout(async () => {
       try {
-        const res = await fetch(
-          `${BASE_URL}/airports?q=${encodeURIComponent(q)}`
-        );
-        if (!res.ok) return;
-        const data = await res.json();
+        const data = await searchAirports(q);
         const list = Array.isArray(data) ? data : data.data ?? [];
         setSuggestions(list);
         setIsOpen(list.length > 0);
